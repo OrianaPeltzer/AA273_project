@@ -90,7 +90,7 @@ if __name__ == "__main__":
 
     kin_data = Kinematic_data(subj_names,num_tries,columns_of_interest,gestures_of_interest)
 
-    G12 = kin_data.gesture_data['G12']
+    G12 = kin_data.gesture_data['G12'].data
 
     embed()
 
