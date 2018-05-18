@@ -3,6 +3,7 @@ from data_extraction import Kinematic_data
 from IPython import embed
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas
 
 
 def initialize_As(state_dimension, gestures_of_interest):
@@ -69,11 +70,15 @@ def perform_regression(initial_A,gesture_data,plotting=0, sampling_fq = 30):
 
     return A_hat
 
+def linear_regression(initial_A,gesture_data,plotting=0, sampling_fq = 30):
+    return
+
+
 if __name__ == "__main__":
     subj_names = ["B", "C", "D", "E", "F", "G", "H", "I"]
     num_tries = [4, 5, 5, 5, 5, 5, 3, 4]
-    columns_of_interest = [13, 14]
-    gestures_of_interest = ['G12', 'G13']
+    columns_of_interest = [51, 52, 53,54,55,56,70,71,72,73,74,75]
+    gestures_of_interest = ['G1','G2','G3','G4','G5','G6','G7','G8','G9','G10','G11','G12','G13','G14','G15']
 
     state_dimension = len(columns_of_interest)
 
@@ -89,22 +94,33 @@ if __name__ == "__main__":
 
     for gesture_name in gestures_of_interest:
 
+
+
         print("")
         print("Gesture name: ", gesture_name)
 
         gesture_data = kin_data.gesture_data[gesture_name].data
-        initial_A = np.load("A_"+gesture_name+".npy")
 
-        print("")
-        print("Found initial A:")
-        print(initial_A)
+        # Save contents to csv
+        for k in range(len(gesture_data)):
+            df = pandas.DataFrame(gesture_data[k])
+            filename = "Csv_per_gesture/"+gesture_name+"/"+str(k+1)+".csv"
+            df.to_csv(filename,index=False)
 
-        new_A = perform_regression(initial_A, gesture_data, plotting=1, sampling_fq=30.0)
+        #embed()
 
-        print("")
-        print("Found new A estimate:")
-        print(new_A)
+        #initial_A = np.load("A_"+gesture_name+".npy")
+
+        #print("")
+        #print("Found initial A:")
+        #print(initial_A)
+
+        #new_A = perform_regression(initial_A, gesture_data, plotting=1, sampling_fq=30.0)
+
+        #print("")
+        #print("Found new A estimate:")
+        #print(new_A)
 
 
-        np.save("A_"+gesture_name,new_A)
-        print("New A saved!")
+        #np.save("A_"+gesture_name,new_A)
+        #print("New A saved!")
