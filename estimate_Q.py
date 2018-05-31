@@ -1,5 +1,3 @@
-from data_extraction import Kinematic_data
-
 from IPython import embed
 import numpy as np
 import matplotlib.pyplot as plt
@@ -96,31 +94,3 @@ if __name__ == "__main__":
 
 
 
-        print("")
-        print("Gesture name: ", gesture_name)
-
-        gesture_data = kin_data.gesture_data[gesture_name].data
-
-        # Save contents to csv
-        #for k in range(len(gesture_data)):
-        #    df = pandas.DataFrame(gesture_data[k])
-        #    filename = "Csv_per_gesture/"+gesture_name+"/"+str(k+1)+".csv"
-        #    df.to_csv(filename,index=False)
-
-        #embed()
-
-        initial_A = np.load("A_"+gesture_name+".npy")
-
-        print("")
-        print("Found initial A:")
-        print(initial_A)
-
-        new_A = perform_regression(initial_A, gesture_data, plotting=1, sampling_fq=30.0)
-
-        print("")
-        print("Found new A estimate:")
-        print(new_A)
-
-
-        np.save("A_"+gesture_name,new_A)
-        print("New A saved!")
