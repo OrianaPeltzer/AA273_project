@@ -12,33 +12,38 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
     samples = []
     labels = []
 
-    dict = {"G1": state_labels[0],"G11": state_labels[1],
-            "G12": state_labels[2],"G13": state_labels[3],
-            "G14": state_labels[4],"G15": state_labels[5]}
+    dict = {"G1": 0,"G11": 1,
+            "G12": 2,"G13": 3,
+            "G14": 4,"G15": 5}
 
     for k in range(len(subj_names)):
         s_name = subj_names[k]
         n_tries = num_tries[k]
         for j in range(n_tries):
+            sample_sequence = []
+            label_sequence = []
             data = pandas.read_csv("Knot_Tying\Kinematics\AllGestures\Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep="     ", lineterminator="\n")
-            transcriptions = pandas.read_csv("Knot_Tying\Transcriptions\Knot_Tying_"+str(self.name)+"00"+str(k+1)+".txt",header=None,sep=" ", lineterminator="\n")
+            transcriptions = pandas.read_csv("Knot_Tying\Transcriptions\Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep=" ", lineterminator="\n")
             for sequence_num in range(np.shape(transcriptions)[1]):
 
-                start_idx = transcriptions[sequence_num][0]
-                end_idx = transcriptions[sequence_num][1]
+                start_idx = transcriptions[0][sequence_num]
+                end_idx = transcriptions[1][sequence_num]
 
-                gesture_name = str(transcriptions[sequence_num][2])
+                gesture_name = str(transcriptions[2][sequence_num])
                 label = dict[gesture_name]
 
                 for time_index in range(start_idx, end_idx+1):
                     sample_per_col = []
                     for col in columns_of_interest:
-                        sample_per_col += [data[j][time_index][col-1].values]
+                        sample_per_col += [data[col-1][time_index]]
                     sample = np.hstack(sample_per_col)
 
-                    labels += [label]
-                    samples += [sample]
+                    label_sequence += [label]
+                    sample_sequence += [sample]
+            labels += [np.hstack(label_sequence)]
+            samples += [np.hstack(sample_sequence)]
 
+    labels = np.hstack(labels)
     return labels, samples
 
 
@@ -92,7 +97,7 @@ if __name__ == "__main__":
     state_labels = ["State_G1","State_G11","State_G12","State_G13","State_G14","State_G15" ]
     labels, sequence = get_samples(state_labels)
 
-    model.fit([sequence], labels = labels, algorithm='labeled', verbose=True)
+    model.fit([sequence], labels = [labels], algorithm='labeled', verbose=True)
 
     print("Fit model to sequence.")
 

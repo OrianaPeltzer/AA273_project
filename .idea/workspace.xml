@@ -42,8 +42,8 @@
       <file leaf-file-name="HMM.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/HMM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="18" lean-forward="true" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
+            <state relative-caret-position="204">
+              <caret line="40" column="45" lean-forward="false" selection-start-line="40" selection-start-column="45" selection-end-line="40" selection-end-column="45" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -98,8 +98,8 @@
         <option value="$PROJECT_DIR$/GMM.py" />
         <option value="$PROJECT_DIR$/Csv_per_gesture/G15/46.csv" />
         <option value="$PROJECT_DIR$/data_extraction.py" />
-        <option value="$PROJECT_DIR$/HMM.py" />
         <option value="$PROJECT_DIR$/HMM_v2.py" />
+        <option value="$PROJECT_DIR$/HMM.py" />
       </list>
     </option>
   </component>
@@ -736,8 +736,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/HMM.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="18" lean-forward="true" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
+        <state relative-caret-position="204">
+          <caret line="40" column="45" lean-forward="false" selection-start-line="40" selection-start-column="45" selection-end-line="40" selection-end-column="45" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
