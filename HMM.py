@@ -12,9 +12,9 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
     samples = []
     labels = []
 
-    dict = {"G1": "State_G1","G11": "State_G11",
-            "G12": "State_G12","G13": "State_G13",
-            "G14": "State_G14","G15": "State_G15"}
+    dict = {"G1": "g1","G11": "g11",
+            "G12": "g12","G13": "g13",
+            "G14": "g14","G15": "g15"}
 
     for k in range(len(subj_names)):
         s_name = subj_names[k]
@@ -55,7 +55,7 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
 
 if __name__ == "__main__":
 
-    num_Gaussians = 6
+    num_Gaussians = 2
 
     GMM_G1 = GMM(gesture_name="G1", num_files=19, num_Gaussians=num_Gaussians)
     GMM_G11 = GMM(gesture_name="G11", num_files=36, num_Gaussians=num_Gaussians)
@@ -64,14 +64,14 @@ if __name__ == "__main__":
     GMM_G14 = GMM(gesture_name="G14", num_files=98, num_Gaussians=num_Gaussians)
     GMM_G15 = GMM(gesture_name="G15", num_files=73, num_Gaussians=num_Gaussians)
     
-    state_G1  = State(GMM_G1.model, name="State_G1")
-    state_G11 = State(GMM_G11.model, name="State_G11")
-    state_G12 = State(GMM_G12.model, name="State_G12")
-    state_G13 = State(GMM_G13.model, name="State_G13")
-    state_G14 = State(GMM_G14.model, name="State_G14")
-    state_G15 = State(GMM_G15.model, name="State_G15")
+    state_G1  = State(GMM_G1.model, name="g1")
+    state_G11 = State(GMM_G11.model, name="g11")
+    state_G12 = State(GMM_G12.model, name="g12")
+    state_G13 = State(GMM_G13.model, name="g13")
+    state_G14 = State(GMM_G14.model, name="g14")
+    state_G15 = State(GMM_G15.model, name="g15")
     
-    model = HiddenMarkovModel(name="Gesture_Classifier_HMM")
+    model = HiddenMarkovModel()
     model.add_state(state_G1)
     model.add_state(state_G11)
     model.add_state(state_G12)
@@ -110,11 +110,10 @@ if __name__ == "__main__":
     state_labels = ["State_G1","State_G11","State_G12","State_G13","State_G14","State_G15" ]
     labels, sequence = get_samples(state_labels)
     
-    model.fit(sequence, labels = labels, algorithm='viterbi', verbose=True)
+    model.fit(sequence, labels = labels, algorithm='labeled', verbose=True)
 
     print("Fit model to sequence.")
 
-    embed()
 
         # 
         # state1 = State(MultivariateGaussianDistribution(np.ones(3), np.diag([1, 1, 1])), name="State1")
