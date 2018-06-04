@@ -55,7 +55,7 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
 
 if __name__ == "__main__":
 
-    num_Gaussians = 2
+    num_Gaussians = 4
 
     GMM_G1 = GMM(gesture_name="G1", num_files=19, num_Gaussians=num_Gaussians)
     GMM_G11 = GMM(gesture_name="G11", num_files=36, num_Gaussians=num_Gaussians)
@@ -80,14 +80,14 @@ if __name__ == "__main__":
     model.add_state(state_G15)
     
     
-    model.add_transition( model.start, state_G1, 0.5 )
-    model.add_transition( model.start, state_G11, 0.5 )
+    model.add_transition( model.start, state_G1, 0.5)
+    model.add_transition( model.start, state_G12, 0.5 )
     
     model.add_transition( state_G1, state_G1, 0.5)
     model.add_transition( state_G1, state_G12, 0.5)
     
-    model.add_transition( state_G12,state_G12,0.5)
-    model.add_transition( state_G12, state_G13,0.5)
+    model.add_transition( state_G12,state_G12,0.75)
+    model.add_transition( state_G12, state_G13,0.25)
     
     model.add_transition( state_G13, state_G13, 0.5)
     model.add_transition( state_G13, state_G14, 0.5)
@@ -99,8 +99,9 @@ if __name__ == "__main__":
     model.add_transition( state_G15, state_G12, 0.3)
     model.add_transition( state_G15, state_G11 ,0.2)
     
-    model.add_transition( state_G11, state_G11, 0.25)
-    model.add_transition( state_G11, model.end, 0.75)
+    model.add_transition( state_G11, state_G11, 0.1)
+    model.add_transition( state_G11, state_G12, 0.7)
+    model.add_transition( state_G11, model.end, 0.2)
 
     
     
@@ -110,10 +111,22 @@ if __name__ == "__main__":
     state_labels = ["State_G1","State_G11","State_G12","State_G13","State_G14","State_G15" ]
     labels, sequence = get_samples(state_labels)
     
-    model.fit(sequence, labels = labels, algorithm='labeled', verbose=True)
+    model.fit(sequence, labels = labels, algorithm='labeled', verbose=True, inertia = 0.75, min_iterations = 5)
 
     print("Fit model to sequence.")
-
+    
+    test_sequence = sequence[10]
+    prediction = model.viterbi(test_sequence)
+    trans, ems = model.forward_backward(test_sequence )
+    
+    t_mat = model.dense_transition_matrix
+    
+    print(trans)
+    
+    print(ems)
+    
+    for i in range (0,np.size(prediction[1])):
+        print(prediction[1][i][1].name)
 
         # 
         # state1 = State(MultivariateGaussianDistribution(np.ones(3), np.diag([1, 1, 1])), name="State1")
