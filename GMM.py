@@ -57,6 +57,8 @@ if __name__ == "__main__":
     GMM_G14 = GMM(gesture_name="G14", num_files=98, num_Gaussians=num_Gaussians)
     GMM_G15 = GMM(gesture_name="G15", num_files=73, num_Gaussians=num_Gaussians)
 
+    embed()
+
     #Samples = []
 #
     ## G1

@@ -17,13 +17,49 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GMM.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GMM.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GMM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="60" column="1" lean-forward="true" selection-start-line="60" selection-start-column="1" selection-end-line="60" selection-end-column="1" />
+            <state relative-caret-position="62">
+              <caret line="50" column="4" lean-forward="true" selection-start-line="50" selection-start-column="4" selection-end-line="57" selection-end-column="80" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="46.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Csv_per_gesture/G15/46.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="413" lean-forward="false" selection-start-line="8" selection-start-column="413" selection-end-line="8" selection-end-column="413" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HMM.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/HMM.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="18" lean-forward="true" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="data_extraction.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data_extraction.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="196">
+              <caret line="88" column="4" lean-forward="false" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="71" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+                <element signature="e#2065#2256#0" expanded="false" />
+                <element signature="e#2287#3790#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -42,6 +78,9 @@
     <findStrings>
       <find>-1.10783100    -10.45002100</find>
       <find>-10.45002100</find>
+      <find>gesture_labels</find>
+      <find>num_tries</find>
+      <find>kin_data</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -50,16 +89,17 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/data_extraction.py" />
         <option value="$PROJECT_DIR$/Regression.py" />
         <option value="$PROJECT_DIR$/Knot_Tying/estimate_Q.py" />
         <option value="$PROJECT_DIR$/estimate_Q.py" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/HMM.py" />
         <option value="$PROJECT_DIR$/GMM_multi.py" />
-        <option value="$PROJECT_DIR$/GMM.py" />
         <option value="$PROJECT_DIR$/Csv_per_gesture/G15/4.csv" />
+        <option value="$PROJECT_DIR$/GMM.py" />
         <option value="$PROJECT_DIR$/Csv_per_gesture/G15/46.csv" />
+        <option value="$PROJECT_DIR$/data_extraction.py" />
+        <option value="$PROJECT_DIR$/HMM.py" />
+        <option value="$PROJECT_DIR$/HMM_v2.py" />
       </list>
     </option>
   </component>
@@ -97,6 +137,23 @@
               <item name="AA273_project" type="462c0819:PsiDirectoryNode" />
               <item name="Csv_per_gesture" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="AA273_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AA273_project" type="462c0819:PsiDirectoryNode" />
+              <item name="Knot_Tying" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AA273_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AA273_project" type="462c0819:PsiDirectoryNode" />
+              <item name="Knot_Tying" type="462c0819:PsiDirectoryNode" />
+              <item name="kinematics" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AA273_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AA273_project" type="462c0819:PsiDirectoryNode" />
+              <item name="Knot_Tying" type="462c0819:PsiDirectoryNode" />
+              <item name="transcriptions" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -119,7 +176,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.GMM">
+  <component name="RunManager" selected="Python.HMM">
     <configuration name="GMM" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -214,9 +271,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.GMM" />
-        <item index="1" class="java.lang.String" itemvalue="Python.GMM_multi" />
-        <item index="2" class="java.lang.String" itemvalue="Python.HMM" />
+        <item index="0" class="java.lang.String" itemvalue="Python.HMM" />
+        <item index="1" class="java.lang.String" itemvalue="Python.GMM" />
+        <item index="2" class="java.lang.String" itemvalue="Python.GMM_multi" />
         <item index="3" class="java.lang.String" itemvalue="Python.test" />
         <item index="4" class="java.lang.String" itemvalue="Python.Regression" />
       </list>
@@ -269,38 +326,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Csv_per_gesture/G1/1.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_extraction.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="34" lean-forward="true" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GMM_multi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/HMM.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
@@ -669,16 +698,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Csv_per_gesture/G15/46.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="427" lean-forward="true" selection-start-line="5" selection-start-column="427" selection-end-line="5" selection-end-column="427" />
+        <state relative-caret-position="136">
+          <caret line="8" column="413" lean-forward="false" selection-start-line="8" selection-start-column="413" selection-end-line="8" selection-end-column="413" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GMM.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="60" column="1" lean-forward="true" selection-start-line="60" selection-start-column="1" selection-end-line="60" selection-end-column="1" />
+        <state relative-caret-position="62">
+          <caret line="50" column="4" lean-forward="true" selection-start-line="50" selection-start-column="4" selection-end-line="57" selection-end-column="80" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_extraction.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="88" column="4" lean-forward="false" selection-start-line="88" selection-start-column="4" selection-end-line="88" selection-end-column="71" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#2065#2256#0" expanded="false" />
+            <element signature="e#2287#3790#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HMM_v2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HMM.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="18" lean-forward="true" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>

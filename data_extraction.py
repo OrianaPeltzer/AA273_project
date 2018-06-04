@@ -81,6 +81,7 @@ class Kinematic_data():
                 self.gesture_data[gesture].data += found_gestures
 
 
+
 if __name__ == "__main__":
 
     subj_names = ["B", "C", "D", "E", "F", "G", "H", "I"]
