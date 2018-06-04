@@ -12,9 +12,9 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
     samples = []
     labels = []
 
-    dict = {"G1": 0,"G11": 1,
-            "G12": 2,"G13": 3,
-            "G14": 4,"G15": 5}
+    dict = {"G1": "State_G1","G11": "State_G11",
+            "G12": "State_G12","G13": "State_G13",
+            "G14": "State_G14","G15": "State_G15"}
 
     for k in range(len(subj_names)):
         s_name = subj_names[k]
@@ -22,8 +22,8 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
         for j in range(n_tries):
             sample_sequence = []
             label_sequence = []
-            data = pandas.read_csv("Knot_Tying\Kinematics\AllGestures\Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep="     ", lineterminator="\n")
-            transcriptions = pandas.read_csv("Knot_Tying\Transcriptions\Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep=" ", lineterminator="\n")
+            data = pandas.read_csv("/home/zong/AA273_project/Knot_Tying/kinematics/AllGestures/Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep="     ", lineterminator="\n")
+            transcriptions = pandas.read_csv("/home/zong/AA273_project/Knot_Tying/transcriptions/Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep=" ", lineterminator="\n")
             for sequence_num in range(np.shape(transcriptions)[1]):
 
                 start_idx = transcriptions[0][sequence_num]
@@ -36,14 +36,16 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
                     sample_per_col = []
                     for col in columns_of_interest:
                         sample_per_col += [data[col-1][time_index]]
+                        
                     sample = np.hstack(sample_per_col)
-
+                    
                     label_sequence += [label]
                     sample_sequence += [sample]
-            labels += [np.hstack(label_sequence)]
-            samples += [np.hstack(sample_sequence)]
+                    
+            labels += [label_sequence]
+            samples += [np.vstack(sample_sequence)]
+            
 
-    labels = np.hstack(labels)
     return labels, samples
 
 
@@ -81,14 +83,25 @@ if __name__ == "__main__":
     model.add_transition( model.start, state_G1, 0.5 )
     model.add_transition( model.start, state_G11, 0.5 )
     
-    model.add_transition( state_G1, state_G1, 0.2)
-    model.add_transition( state_G1, state_G11, 0.4)
+    model.add_transition( state_G1, state_G1, 0.5)
+    model.add_transition( state_G1, state_G12, 0.5)
     
-    model.add_transition( state_G11, state_G1, 0.2)
-    model.add_transition( state_G11, state_G11, 0.4)
+    model.add_transition( state_G12,state_G12,0.5)
+    model.add_transition( state_G12, state_G13,0.5)
     
-    model.add_transition( state_G1, model.end, 0.2)
-    model.add_transition( state_G11, model.end, 0.2)
+    model.add_transition( state_G13, state_G13, 0.5)
+    model.add_transition( state_G13, state_G14, 0.5)
+    
+    model.add_transition( state_G14, state_G14, 0.75)
+    model.add_transition( state_G14, state_G15, 0.25)
+    
+    model.add_transition( state_G15, state_G15, 0.5)
+    model.add_transition( state_G15, state_G12, 0.3)
+    model.add_transition( state_G15, state_G11 ,0.2)
+    
+    model.add_transition( state_G11, state_G11, 0.25)
+    model.add_transition( state_G11, model.end, 0.75)
+
     
     
     model.bake()
@@ -96,8 +109,8 @@ if __name__ == "__main__":
 
     state_labels = ["State_G1","State_G11","State_G12","State_G13","State_G14","State_G15" ]
     labels, sequence = get_samples(state_labels)
-
-    model.fit([sequence], labels = [labels], algorithm='labeled', verbose=True)
+    
+    model.fit(sequence, labels = labels, algorithm='viterbi', verbose=True)
 
     print("Fit model to sequence.")
 
