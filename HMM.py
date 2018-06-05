@@ -3,6 +3,8 @@ import random
 import numpy as np
 random.seed(0)
 from GMM import *
+import matplotlib.pyplot as plt
+from IPython import embed
 
 
 def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"], num_tries=[4, 5, 5, 5, 5, 5, 3, 4],columns_of_interest = [51, 52, 53,54,55,56,70,71,72,73,74,75]):
@@ -14,7 +16,9 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
 
     dict = {"G1": "g1","G11": "g11",
             "G12": "g12","G13": "g13",
-            "G14": "g14","G15": "g15"}
+            "G14": "g14","G15": "g15","G1\r": "g1","G11\r": "g11",
+            "G12\r": "g12","G13\r": "g13",
+            "G14\r": "g14","G15\r": "g15"}
 
     for k in range(len(subj_names)):
         s_name = subj_names[k]
@@ -24,7 +28,7 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
             label_sequence = []
             data = pandas.read_csv("/home/zong/AA273_project/Knot_Tying/kinematics/AllGestures/Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep="     ", lineterminator="\n")
             transcriptions = pandas.read_csv("/home/zong/AA273_project/Knot_Tying/transcriptions/Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep=" ", lineterminator="\n")
-            for sequence_num in range(np.shape(transcriptions)[1]):
+            for sequence_num in range(np.shape(transcriptions)[0]):
 
                 start_idx = transcriptions[0][sequence_num]
                 end_idx = transcriptions[1][sequence_num]
@@ -32,7 +36,7 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
                 gesture_name = str(transcriptions[2][sequence_num])
                 label = dict[gesture_name]
 
-                for time_index in range(start_idx, end_idx+1):
+                for time_index in range(start_idx, end_idx):
                     sample_per_col = []
                     for col in columns_of_interest:
                         sample_per_col += [data[col-1][time_index]]
@@ -48,10 +52,37 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
 
     return labels, samples
 
+def online_evaluate(sequence, model):
+    Prediction_test = []
+    little_sequence=[]
+    for i,elt in enumerate(sequence):
+#        if i == 0:
+#            little_sequence = np.array(elt)
+#        else:
+        little_sequence.append(np.array(elt))
+        embed()
+    
+        prediction = model.viterbi(little_sequence)
+        Prediction_test.append(prediction[1][-2][1].name)
+    return Prediction_test
 
+def plot_results(labels, prediction):
+    dictionary = {'g1':0, 'g11':1, 'g12':2, 'g13':3, 'g14':4, 'g15':5}
+    
+    if len(labels) != len(prediction):
+        raise ValueError('Prediction and samples are not the same length!')
+        
+    x = [k for k in range(len(labels))]
+    
+    ypred = [dictionary[elt] for elt in prediction]
+    ylabel = [dictionary[elt] for elt in labels]
+    
+    plt.plot(x, ypred, label='Predicted')
+    plt.plot(x, ylabel, label='True Gesture')
+    plt.legend(loc='best')
+    
+    plt.show()
 
-
-    return samples, labels
 
 if __name__ == "__main__":
 
@@ -70,6 +101,8 @@ if __name__ == "__main__":
     state_G13 = State(GMM_G13.model, name="g13")
     state_G14 = State(GMM_G14.model, name="g14")
     state_G15 = State(GMM_G15.model, name="g15")
+    
+  
     
     model = HiddenMarkovModel()
     model.add_state(state_G1)
@@ -111,22 +144,37 @@ if __name__ == "__main__":
     state_labels = ["State_G1","State_G11","State_G12","State_G13","State_G14","State_G15" ]
     labels, sequence = get_samples(state_labels)
     
-    model.fit(sequence, labels = labels, algorithm='labeled', verbose=True, inertia = 0.75, min_iterations = 5)
-
+    del sequence[22]
+    del labels[22]
+    
+    model.fit(sequence, labels = labels, algorithm='labeled', verbose=True, inertia = 0.75)
+    #model.fit(sequence, labels = labels, algorithm='labeled',verbose=True, stop_threshold=1)
     print("Fit model to sequence.")
     
-    test_sequence = sequence[10]
+    # Number of the sequence to test
+    num_test = 15
+    
+    # Evaluating test sequence
+    test_sequence = sequence[num_test]
     prediction = model.viterbi(test_sequence)
-    trans, ems = model.forward_backward(test_sequence )
+    '''trans, ems = model.forward(test_sequence )
     
     t_mat = model.dense_transition_matrix
     
     print(trans)
     
-    print(ems)
+    print(ems)'''
     
-    for i in range (0,np.size(prediction[1])):
-        print(prediction[1][i][1].name)
+    # Creating Prediction and label objects for plots
+    #Prediction_test = online_evaluate(test_sequence, model)
+    Prediction_test = []
+    for i in range(1,len(prediction[1])-1):
+        Prediction_test.append(prediction[1][i][1].name)
+    
+    Labels_test = labels[num_test]
+    
+    plot_results(Labels_test, Prediction_test)
+    
 
         # 
         # state1 = State(MultivariateGaussianDistribution(np.ones(3), np.diag([1, 1, 1])), name="State1")
