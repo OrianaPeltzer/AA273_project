@@ -28,7 +28,7 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
             label_sequence = []
             data = pandas.read_csv("/home/zong/AA273_project/Knot_Tying/kinematics/AllGestures/Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep="     ", lineterminator="\n")
             transcriptions = pandas.read_csv("/home/zong/AA273_project/Knot_Tying/transcriptions/Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep=" ", lineterminator="\n")
-            for sequence_num in range(np.shape(transcriptions)[0]):
+            for sequence_num in range(np.shape(transcriptions)[0]): #change this to index 1 to get half trained data
 
                 start_idx = transcriptions[0][sequence_num]
                 end_idx = transcriptions[1][sequence_num]
@@ -53,20 +53,17 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
     return labels, samples
 
 def online_evaluate(sequence, model):
-    Prediction_test = []
-    little_sequence=[]
-    for i,elt in enumerate(sequence):
-#        if i == 0:
-#            little_sequence = np.array(elt)
-#        else:
-        little_sequence.append(np.array(elt))
-        embed()
     
-        prediction = model.viterbi(little_sequence)
-        Prediction_test.append(prediction[1][-2][1].name)
-    return Prediction_test
+    k = model.predict(sequence,algorithm='map')
+    
+    if k == -1:
+        prediction = 0
+    else:
+        prediction = k[-1] 
+       
+    return prediction
 
-def plot_results(labels, prediction):
+def plot_results(labels, prediction,key):
     dictionary = {'g1':0, 'g11':1, 'g12':2, 'g13':3, 'g14':4, 'g15':5}
     
     if len(labels) != len(prediction):
@@ -74,7 +71,11 @@ def plot_results(labels, prediction):
         
     x = [k for k in range(len(labels))]
     
-    ypred = [dictionary[elt] for elt in prediction]
+    if key == True:
+        ypred = [dictionary[elt] for elt in prediction]
+    else:
+        ypred = prediction
+        
     ylabel = [dictionary[elt] for elt in labels]
     
     plt.plot(x, ypred, label='Predicted')
@@ -86,7 +87,7 @@ def plot_results(labels, prediction):
 
 if __name__ == "__main__":
 
-    num_Gaussians = 4
+    num_Gaussians = 12
 
     GMM_G1 = GMM(gesture_name="G1", num_files=19, num_Gaussians=num_Gaussians)
     GMM_G11 = GMM(gesture_name="G11", num_files=36, num_Gaussians=num_Gaussians)
@@ -147,7 +148,7 @@ if __name__ == "__main__":
     del sequence[22]
     del labels[22]
     
-    model.fit(sequence, labels = labels, algorithm='labeled', verbose=True, inertia = 0.75)
+    model.fit(sequence, labels = labels, algorithm='labeled', verbose=True, inertia = 0.9)
     #model.fit(sequence, labels = labels, algorithm='labeled',verbose=True, stop_threshold=1)
     print("Fit model to sequence.")
     
@@ -172,10 +173,17 @@ if __name__ == "__main__":
         Prediction_test.append(prediction[1][i][1].name)
     
     Labels_test = labels[num_test]
+    plot_results(Labels_test, Prediction_test,True)
     
-    plot_results(Labels_test, Prediction_test)
+    # This creates the online simulation using the forward algorithm
+    Prediction_test2=[]
+    k = model.forward(test_sequence)
+    for i in range(1,len(prediction[1])-1):
+        pred2 = np.argmax(k[i][:])
+        Prediction_test2.append(pred2)
     
-
+    plot_results(Labels_test,Prediction_test2,False)
+    
         # 
         # state1 = State(MultivariateGaussianDistribution(np.ones(3), np.diag([1, 1, 1])), name="State1")
         # state2 = State(MultivariateGaussianDistribution(np.ones(3), 4 * np.diag([1, 1, 1])), name="State2")
