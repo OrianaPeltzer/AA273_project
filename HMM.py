@@ -52,42 +52,46 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
 
     return labels, samples
 
-def online_evaluate(sequence, model):
-    
-    k = model.predict(sequence,algorithm='map')
-    
-    if k == -1:
-        prediction = 0
-    else:
-        prediction = k[-1] 
-       
-    return prediction
+#def online_evaluate(sequence, model):
+#    
+#    k = model.predict(sequence,algorithm='map')
+#    
+#    if k == -1:
+#        prediction = 0
+#    else:
+#        prediction = k[-1] 
+#       
+#    return prediction
 
 def plot_results(labels, prediction,key):
-    dictionary = {'g1':0, 'g11':1, 'g12':2, 'g13':3, 'g14':4, 'g15':5}
+    
+    dictionary = {'g1':1, 'g11':2, 'g12':3, 'g13':4, 'g13b':5,'g14':6,'g15':7}
     
     if len(labels) != len(prediction):
         raise ValueError('Prediction and samples are not the same length!')
         
-    x = [k for k in range(len(labels))]
+    x = [k/30 for k in range(len(labels))]
     
     if key == True:
         ypred = [dictionary[elt] for elt in prediction]
     else:
-        ypred = prediction
+        dictionary2 = {0:1, 1:2, 2:3, 3:4, 4:6,5:7}
+        ypred = [dictionary2[elt] for elt in prediction]
+        #ypred = prediction
         
     ylabel = [dictionary[elt] for elt in labels]
     
     plt.plot(x, ypred, label='Predicted')
     plt.plot(x, ylabel, label='True Gesture')
     plt.legend(loc='best')
-    
+    plt.title('HMM Gesture Estimate')
+    plt.yticks(np.arange(8), ('None','G1','G11','G12','G13a','G13b','G14','G15'))
     plt.show()
 
 
 if __name__ == "__main__":
 
-    num_Gaussians = 4
+    num_Gaussians = 12
 
     GMM_G1 = GMM(gesture_name="G1", num_files=19, num_Gaussians=num_Gaussians)
     GMM_G11 = GMM(gesture_name="G11", num_files=36, num_Gaussians=num_Gaussians)
@@ -153,7 +157,8 @@ if __name__ == "__main__":
     print("Fit model to sequence.")
     
     # Number of the sequence to test
-    num_test = 15
+    num_test = 7
+    #num_test = 3
     
     # Evaluating test sequence
     test_sequence = sequence[num_test]
@@ -181,56 +186,3 @@ if __name__ == "__main__":
     
     plot_results(Labels_test,Prediction_test2,False)
     
-        # 
-        # state1 = State(MultivariateGaussianDistribution(np.ones(3), np.diag([1, 1, 1])), name="State1")
-        # state2 = State(MultivariateGaussianDistribution(np.ones(3), 4 * np.diag([1, 1, 1])), name="State2")
-        # 
-        # model = HiddenMarkovModel(name="TestModel")
-        # model.add_state(state1)
-        # model.add_state(state2)
-        # 
-        # model.add_transition(model.start, state1, 0.5)
-        # model.add_transition(model.start, state2, 0.5)
-        # 
-        # model.add_transition(state1, state1, 0.2)
-        # model.add_transition(state1, state2, 0.4)
-        # 
-        # model.add_transition(state2, state1, 0.2)
-        # model.add_transition(state2, state2, 0.4)
-        # 
-        # model.add_transition(state1, model.end, 0.2)
-        # model.add_transition(state2, model.end, 0.2)
-        # 
-        # model.bake()
-        # 
-        # sequence = []
-        # for k in range(10):
-        #     sequence.append(np.ndarray.tolist(np.random.rand(3)))
-        # print("Sample:")
-        # print(sequence)
-        # print("")
-        # 
-        # print("Transition Matrix")
-        # print(model.dense_transition_matrix())
-        # 
-        # model.fit([sequence])
-        # 
-        # print("Fit model to sequence.")
-        # 
-        # sequence2 = []
-        # for k in range(10):
-        #     sequence2.append(np.ndarray.tolist(np.random.rand(3)))
-        # 
-        # next_sample = model.predict(sequence2)
-        # 
-        # logp, path = model.viterbi(sequence2)
-        # print("Log probability")
-        # print(logp)
-        # print("Path: ")
-        # for idx, state in path[1:-1]:
-        #     print(state.name)
-        # print("Next sample:")
-        # print(sequence2)
-        # print("Predicted next sample:")
-        # print(next_sample)
-        # 
