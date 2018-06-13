@@ -28,7 +28,7 @@ def get_samples(state_labels, subj_names=["B", "C", "D", "E", "F", "G", "H", "I"
             label_sequence = []
             data = pandas.read_csv("/home/zong/AA273_project/Knot_Tying/kinematics/AllGestures/Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep="     ", lineterminator="\n")
             transcriptions = pandas.read_csv("/home/zong/AA273_project/Knot_Tying/transcriptions/Knot_Tying_"+str(s_name)+"00"+str(j+1)+".txt",header=None,sep=" ", lineterminator="\n")
-            for sequence_num in range(np.shape(transcriptions)[1]): #change this to index 1 to get half trained data
+            for sequence_num in range(np.shape(transcriptions)[0]): #change this to index 1 to get half trained data
 
                 start_idx = transcriptions[0][sequence_num]
                 end_idx = transcriptions[1][sequence_num]
@@ -157,8 +157,8 @@ if __name__ == "__main__":
     print("Fit model to sequence.")
     
     # Number of the sequence to test
-    num_test = 7
-    #num_test = 3
+    #num_test = 7
+    num_test = 3
     
     # Evaluating test sequence
     test_sequence = sequence[num_test]

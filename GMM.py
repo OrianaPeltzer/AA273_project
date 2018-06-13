@@ -58,34 +58,3 @@ if __name__ == "__main__":
     GMM_G15 = GMM(gesture_name="G15", num_files=73, num_Gaussians=num_Gaussians)
 
     embed()
-
-    #Samples = []
-#
-    ## G1
-    #pth = "Csv_per_gesture/G12"
-    #directory = pth + "/" + str(1) + ".csv"
-    #data = pandas.read_csv(directory, header=None, sep=",")
-    #data = data.values[1:]
-    #Samples = data
-
-    #print(Samples)
-
-    #for i in range(1,70):
-    #    directory = pth+"/"+str(i+1)+".csv"
-    #    data = pandas.read_csv(directory,header=None,sep=",")
-    #    data = data.values[1:]
-    #    Samples=np.hstack((Samples,data))#
-
-#    Samples = np.transpose(Samples)
-#    print(np.shape(Samples))
-
-    #model = GeneralMixtureModel([MultivariateGaussianDistribution(np.random.rand(12,1),np.diag([1,1,1,1,1,1,1,1,1,1,1,1])) for k in range(6)])
-
-    ##embed()
-    #model.fit(Samples, verbose=True, stop_threshold=1)
-    ##point = np.random.rand(1,12)
-    #point = Samples[0,:]
-    #print(point)
-    #print(model.predict(point))
-    #print(model.log_probability(point))
-    #embed()
